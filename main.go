@@ -8,6 +8,7 @@ import (
 	_ "github.com/lib/pq"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -56,12 +57,13 @@ func (a *App) initRoutes() {
 }
 
 func (a *App) initialize(user, password, dbname, addr string) {
-	connString := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable", user, password, dbname)
+	connString := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", "192.168.1.40", 5432, user, password, dbname)
 
 	var err error
 	a.Conn, err = sql.Open("postgres", connString)
 	if err != nil {
 		log.Fatal(err)
+		return
 	}
 	a.Router = mux.NewRouter()
 
@@ -84,11 +86,12 @@ func main() {
 	user := "postgres"
 	password := "135797531"
 	dbname := "intern"
-	addr := "127.0.0.1:4560"
+	addr := os.Getenv("ADDR")
 	a := App{}
 
 	a.initialize(user, password, dbname, addr)
 	a.initRoutes()
 	//a.checkSellerOfferExistence(1,1)
+	log.Println("hello")
 	a.Run()
 }

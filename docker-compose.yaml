@@ -1,0 +1,35 @@
+  version: '3.7'
+
+  services:
+    web:
+      container_name: intern
+      build: .
+      restart: on-failure
+      networks:
+        - intrn
+      environment:
+        ADDR: "0.0.0.0:4560"
+        POSTGRES_USER: "postgres"
+        POSTGRES_PASSWORD: "135797531"
+        POSTGRES_DB: "intern"
+      ports:
+        - "4560:4560"
+      volumes:
+      - api:/usr/src/app/
+      depends_on:
+        - db
+    db:
+      restart: always
+      image: postgres:latest
+      networks:
+        - intrn
+      container_name: db_postgres
+      volumes:
+        - database_postgres:/var/lib/postgresql/data
+
+  volumes:
+    api:
+    database_postgres:
+
+  networks:
+    intrn:

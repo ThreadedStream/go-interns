@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"math/rand"
 	"mime/multipart"
 	"net/http"
@@ -75,11 +76,13 @@ func (a *App) getStatusOfOperation(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *App) retrieveGoods(w http.ResponseWriter, r *http.Request) {
+	log.Printf("Retrieving...")
 	goodsList := make([]Goods, 0)
 	params := r.URL.Query()
 	sellerId := params["seller_id"]
 	offerId := params["offer_id"]
 	query := params["query"]
+	log.Printf("params, seller_id, query")
 	if len(sellerId) == 0 {
 		sellerId = append(sellerId, "")
 	}
@@ -90,6 +93,7 @@ func (a *App) retrieveGoods(w http.ResponseWriter, r *http.Request) {
 		query = append(query, "")
 	}
 	err, gs := a.getGoods(sellerId[0], offerId[0], query[0])
+	log.Println(err)
 	if err != nil {
 		response := Response{
 			w:               w,
@@ -99,6 +103,7 @@ func (a *App) retrieveGoods(w http.ResponseWriter, r *http.Request) {
 		response.jsonResponse()
 		return
 	}
+
 	for i := range gs {
 		var goods Goods
 		b, err := json.Marshal(gs[i])

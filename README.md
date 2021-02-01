@@ -1,4 +1,17 @@
-# How to run it?
+# Instructions to run an application
 
-The fact that the whole application is containerized makes building process much easier. Application consists of two containers, namely web and db, where the former 
-depends on latter. You only need to run docker-compose up (try with sudo if it fails).
+Be sure to export the following environmental variables before running docker-compose. If you are on linux, run the following commands:
+
+```
+  export POSTGRES_USER=<your_postgres_user>
+  export POSTGRES_PASSWORD=<your_postgres_password>
+  export POSTGRES_DB=<database_name>
+  export ADDR=<0.0.0.0:<some_port>>
+  
+  sudo docker-compose up
+```
+
+
+
+
+

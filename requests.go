@@ -76,13 +76,11 @@ func (a *App) getStatusOfOperation(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *App) retrieveGoods(w http.ResponseWriter, r *http.Request) {
-	log.Printf("Retrieving...")
 	goodsList := make([]Goods, 0)
 	params := r.URL.Query()
 	sellerId := params["seller_id"]
 	offerId := params["offer_id"]
 	query := params["query"]
-	log.Printf("params, seller_id, query")
 	if len(sellerId) == 0 {
 		sellerId = append(sellerId, "")
 	}

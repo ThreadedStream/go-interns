@@ -83,9 +83,9 @@ func (a *App) Run() {
 }
 
 func main() {
-	user := "postgres"
-	password := "135797531"
-	dbname := "intern"
+	user := os.Getenv("POSTGRES_USER")
+	password := os.Getenv("POSTGRES_PASSWORD")
+	dbname := os.Getenv("POSTGRES_DB")
 	addr := os.Getenv("ADDR")
 	a := App{}
 
